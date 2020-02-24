@@ -1,9 +1,11 @@
 package com.gmail.eamosse.imdb.ui.home
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gmail.eamosse.idbdata.data.Category
 import com.gmail.eamosse.idbdata.data.Token
 import com.gmail.eamosse.idbdata.repository.MovieRepository
 import com.gmail.eamosse.idbdata.utils.Result
@@ -20,16 +22,44 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
+    private val _categories: MutableLiveData<List<Category>> = MutableLiveData()
+    val categories: LiveData<List<Category>>
+        get() = _categories
+
+
+    var internetErrorVisibility: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repository.getToken()) {
                 is Result.Succes -> {
                     _token.postValue(result.data)
+                    internetErrorVisibility.postValue(View.INVISIBLE)
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)
+                    internetErrorVisibility.postValue(View.VISIBLE)
                 }
             }
         }
+    }
+
+    fun getCategories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getCategories()) {
+                is Result.Succes -> {
+                    _categories.postValue(result.data)
+                    internetErrorVisibility.postValue(View.INVISIBLE)
+                }
+                is Result.Error -> {
+                    _error.postValue(result.message)
+                    internetErrorVisibility.postValue(View.VISIBLE)
+                }
+            }
+        }
+    }
+
+    fun onRetry(){
+        getCategories()
     }
 }
