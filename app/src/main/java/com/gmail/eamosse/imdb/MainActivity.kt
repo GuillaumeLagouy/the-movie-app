@@ -2,6 +2,7 @@ package com.gmail.eamosse.imdb
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             Log.d("TOKEN", repository.getToken().toString())
         }
+
+        val callback = this.onBackPressedDispatcher.addCallback(this){
+
+        }
     }
 
     /**
@@ -36,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun initNavController() {
         //Instance de la bottom navigation
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        //Navigation controlleur, utilisée pour géter la navigation (ex. affichage de fragment)
+        //Navigation controlleur, utilisée pour gerer la navigation (ex. affichage de fragment)
         val navController = findNavController(R.id.nav_host_fragment)
         //Charger les éléments principaux de la bottom bar
         val appBarConfiguration = AppBarConfiguration(

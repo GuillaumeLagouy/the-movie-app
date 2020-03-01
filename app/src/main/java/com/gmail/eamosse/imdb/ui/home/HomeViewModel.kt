@@ -10,6 +10,7 @@ import com.gmail.eamosse.idbdata.data.Token
 import com.gmail.eamosse.idbdata.repository.MovieRepository
 import com.gmail.eamosse.idbdata.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
@@ -26,6 +27,9 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
     val categories: LiveData<List<Category>>
         get() = _categories
 
+    private val _isFinish: MutableLiveData<Unit> = MutableLiveData()
+    val isFinish: LiveData<Unit>
+        get() = _isFinish
 
     var internetErrorVisibility: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
 
@@ -50,6 +54,7 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                 is Result.Succes -> {
                     _categories.postValue(result.data)
                     internetErrorVisibility.postValue(View.INVISIBLE)
+                    disableShimmer()
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)
@@ -59,7 +64,16 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
         }
     }
 
+    private fun disableShimmer() = viewModelScope.launch {
+        delay(2000)
+        _isFinish.value = Unit
+    }
+
     fun onRetry(){
         getCategories()
+    }
+
+    fun onSelected(){
+        println("click")
     }
 }

@@ -12,28 +12,47 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/navigation_home_second" />
+            android:id="@+id/action_HomeFragment_to_ListMoviesFragment"
+            app:destination="@id/navigation_list_movies" />
     </fragment>
+
     <fragment
-        android:id="@+id/navigation_home_second"
-        android:name="com.gmail.eamosse.imdb.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/navigation_home" />
+        android:id="@+id/navigation_list_movies"
+        android:name="com.gmail.eamosse.imdb.ui.listMovies.ListMoviesFragment"
+        android:label="List Movies"
+        tools:layout="@layout/fragment_list_movies">
 
         <argument
-            android:name="myArg"
-            app:argType="string" />
+            android:name="categoryId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/action_ListMoviesFragment_to_MovieDetailFragment"
+            app:destination="@id/navigation_movie_detail"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_movie_detail"
+        android:name="com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment"
+        android:label="Movie Detail"
+        tools:layout="@layout/fragment_movie_detail">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.gmail.eamosse.imdb.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.gmail.eamosse.imdb.ui.trending.TrendingFragment"
+        android:label="@string/title_trending"
+        tools:layout="@layout/trending_fragment">
+
+        <action
+            android:id="@+id/action_TrendingFragment_to_ListMoviesFragment"
+            app:destination="@id/navigation_list_movies"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
