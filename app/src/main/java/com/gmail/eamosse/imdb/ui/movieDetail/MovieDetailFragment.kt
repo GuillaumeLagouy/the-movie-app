@@ -11,7 +11,7 @@ import com.gmail.eamosse.imdb.databinding.FragmentMovieDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailFragment : Fragment() {
-    private  val viewModel: MovieDetailViewModel by viewModel()
+    private val viewModel: MovieDetailViewModel by viewModel()
     private lateinit var binding: FragmentMovieDetailBinding
 
     override fun onCreateView(
@@ -22,7 +22,6 @@ class MovieDetailFragment : Fragment() {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@MovieDetailFragment
             viewModel = this@MovieDetailFragment.viewModel
-
         }
         return binding.root
     }

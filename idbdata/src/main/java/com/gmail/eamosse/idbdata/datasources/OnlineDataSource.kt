@@ -52,6 +52,16 @@ internal class OnlineDataSource(private val service: MovieService) {
         }
     }
 
+    suspend fun getActorMovies(actorId: Int): Result<List<ActorMoviesResponse.Result>> {
+        return safeCall {
+            val response = service.getActorMovies(actorId)
+            when (val result = response.parse()) {
+                is Result.Succes -> Result.Succes(result.data.results)
+                is Result.Error -> result
+            }
+        }
+    }
+
     suspend fun getMovieDetail(movieId:Int): Result<MovieDetailResponse>{
         return safeCall {
             val response = service.getMovieDetail(movieId)
@@ -87,6 +97,26 @@ internal class OnlineDataSource(private val service: MovieService) {
             val response : Response<TrendingPersonResponse> = service.getTrendingPeople()
             when (val result = response.parse()) {
                 is Result.Succes -> Result.Succes(result.data.results)
+                is Result.Error -> result
+            }
+        }
+    }
+
+    suspend fun getActor(department:String): Result<List<ActorResponse.Result>>{
+        return safeCall {
+            val response : Response<ActorResponse> = service.getActor(department)
+            when (val result = response.parse()) {
+                is Result.Succes -> Result.Succes(result.data.results)
+                is Result.Error -> result
+            }
+        }
+    }
+
+    suspend fun getActorDetail(actorId:Int): Result<ActorDetailResponse>{
+        return safeCall {
+            val response = service.getActorDetail(actorId)
+            when (val result = response.parse()) {
+                is Result.Succes -> Result.Succes(result.data)
                 is Result.Error -> result
             }
         }

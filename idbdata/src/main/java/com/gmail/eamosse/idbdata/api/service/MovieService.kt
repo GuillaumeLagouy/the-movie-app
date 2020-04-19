@@ -32,4 +32,13 @@ internal interface MovieService {
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovies(@Path("movie_id") movieId:Int): Response<MoviesResponse>
+
+    @GET("person/popular")
+    suspend fun getActor(@Query("known_for_department") department:String):Response<ActorResponse>
+
+    @GET("person/{person_id}")
+    suspend fun getActorDetail(@Path("person_id") actorId:Int): Response<ActorDetailResponse>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getActorMovies(@Path("person_id") actorId:Int): Response<ActorMoviesResponse>
 }

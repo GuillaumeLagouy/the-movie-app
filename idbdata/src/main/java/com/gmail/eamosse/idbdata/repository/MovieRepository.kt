@@ -63,6 +63,18 @@ class MovieRepository : KoinComponent {
         }
     }
 
+    suspend fun getActorMovies(actorId: Int): Result<List<Movie>> {
+        return when(val result = online.getActorMovies(actorId)){
+            is Result.Succes -> {
+                val results = result.data.map {
+                    it.toMovie()
+                }
+                Result.Succes(results)
+            }
+            is Result.Error -> result
+        }
+    }
+
     suspend fun getMovieDetail(movieId:Int): Result<MovieDetail> {
         return when(val result = online.getMovieDetail(movieId)){
             is Result.Succes -> {
@@ -109,6 +121,25 @@ class MovieRepository : KoinComponent {
         }
     }
 
+    suspend fun getActor(department:String): Result<List<Actor>> {
+        return when(val result = online.getActor(department)){
+            is Result.Succes -> {
+                val actor = result.data.map {
+                    it.toActor()
+                }
+                Result.Succes(actor)
+            }
+            is Result.Error -> result
+        }
+    }
 
-
+    suspend fun getActorDetail(actorId:Int): Result<ActorDetail> {
+        return when(val result = online.getActorDetail(actorId)){
+            is Result.Succes -> {
+                val actorDetail = result.data.toActorDetail()
+                Result.Succes(actorDetail)
+            }
+            is Result.Error -> result
+        }
+    }
 }

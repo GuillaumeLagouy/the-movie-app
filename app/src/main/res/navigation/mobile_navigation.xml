@@ -3,7 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_media_type">
+
+    <fragment
+        android:id="@+id/navigation_media_type"
+        android:name="com.gmail.eamosse.imdb.ui.mediaType.MediaTypeFragment"
+        android:label="@string/title_media_type"
+        tools:layout="@layout/media_type_fragment"
+    >
+        <action
+            android:id="@+id/action_MediaTypeFragment_to_HomeFragment"
+            app:destination="@id/navigation_home"
+        />
+        <action
+            android:id="@+id/action_MediaTypeFragment_to_ListActorsFragment"
+            app:destination="@id/navigation_list_actors"
+        />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
@@ -29,6 +46,32 @@
         <action
             android:id="@+id/action_ListMoviesFragment_to_MovieDetailFragment"
             app:destination="@id/navigation_movie_detail"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_list_actors"
+        android:name="com.gmail.eamosse.imdb.ui.listActors.ListActorsFragment"
+        android:label="List Actors"
+    >
+        <action
+            android:id="@+id/action_ListActorsFragment_to_ActorDetailFragment"
+            app:destination="@id/navigation_actor_detail"
+        />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_actor_detail"
+        android:name="com.gmail.eamosse.imdb.ui.actorDetail.ActorDetailFragment"
+        android:label="Actor Detail"
+    >
+        <argument
+            android:name="actorId"
+            app:argType="integer"/>
+
+        <action
+            android:id="@+id/action_ActorDetailFragement_to_MovieDetailFragment"
+            app:destination="@id/navigation_movie_detail"
+        />
     </fragment>
 
     <fragment
